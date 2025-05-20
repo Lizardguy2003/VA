@@ -84,9 +84,6 @@ def move_balls():
     for i in range(len(balls)):
         ball_id, velx, vely = balls[i]
         coords = canvas.coords(ball_id)
-        print(balls[i])
-        
-
         
         if coords[0] + velx < 0 or coords[2] + velx > 500:
             velx = choice([-1, 1]) * speed_true
@@ -104,22 +101,21 @@ def move_balls():
             ball2_id, velx2, vely2 = balls[j]
             ball2_coords = canvas.coords(ball2_id)
             
-            coordx1 = (ball1_coords[0] + ball1_coords[2]) / 2
-            coordy1 = (ball1_coords[1] + ball1_coords[3]) / 2
-            coordx2 = (ball2_coords[0] + ball2_coords[2]) / 2
-            coordy2 = (ball2_coords[1] + ball2_coords[3]) / 2
-
-            coord1 = numpy.array([coordx1, coordy1])
-            coord2 = numpy.array([coordx2, coordy2])
+            
             if balls_touch(ball1_coords, ball2_coords):
                 
 
-                #calculate velocities
-                #vel1 = numpy.array([velx, vely])
+                coordx1 = (ball1_coords[0] + ball1_coords[2]) / 2
+                coordy1 = (ball1_coords[1] + ball1_coords[3]) / 2
+                coordx2 = (ball2_coords[0] + ball2_coords[2]) / 2
+                coordy2 = (ball2_coords[1] + ball2_coords[3]) / 2
+
+                coord1 = numpy.array([coordx1, coordy1])
+                coord2 = numpy.array([coordx2, coordy2])
                 vel2 = numpy.array([velx2, vely2])
                 
-                vel_new1 = vel + (numpy.dot((vel2-vel),(coord2 - coord1))/(numpy.abs(coord2-coord1)**2))*(coord2 - coord1)
-                vel_new2 = vel2 + (numpy.dot((vel-vel2),(coord1-coord2))/(numpy.abs(coord1-coord2)**2))*(coord1-coord2)
+                vel_new1 = vel + (numpy.dot((vel2-vel),(coord2 - coord1))/(abs(coord2-coord1)**2))*(coord2 - coord1)
+                vel_new2 = vel2 + (numpy.dot((vel-vel2),(coord1-coord2))/(abs(coord1-coord2)**2))*(coord1-coord2)
                 
                 balls[i] = (ball_id, vel_new1[0], vel_new1[1])
                 
